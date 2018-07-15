@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>React practice</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        .wrapper{
+            padding-top: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .title{
+            text-align: center;
+        }
+        form.form-group {
+            display: flex;
+        }
+        li.list-group-item{
+            display:flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        ul.list-group{
+            margin-bottom:20px;
+        }
+        input.form-control {
+            width: 80%;
+        }
+        input.btn.btn-primary{
+            margin-left: 20px;
+            width: 20%;
+        }
+        @media(max-width: 425px){
+            form.form-group{
+                flex-wrap:wrap
+            }
+            input.form-control{
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            input.btn.btn-primary{
+                width:100%;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+    const app = document.getElementById('root');
+
+    class Task extends React.Component {
+        constructor() {
+            super();
+            this.state = {
+                names: [],
+                show: false,
+                value: ''
+            };
+        }
+       handleChange(event){
+            this.setState({
+                value: event.target.value
+            });
+
+       }
+       addItem(event){
+            this.state.names.push(this.state.value);
+            this.setState({
+                names: this.state.names,
+                value: ''
+            });
+           event.preventDefault();
+       }
+       removeItem(index){
+            this.state.names.splice(index,1);
+            this.setState({
+                names: this.state.names
+            });
+       }
+        render() {
+            var list = this.state.names.map((item, index) => {
+                return (
+                    <li className="list-group-item" key={index}>{item}
+                        <button className="btn btn-outline-danger" onClick={this.removeItem.bind(this,index )}>x</button>
+                    </li>
+                )
+            });
+            return (
+                <div className="container">
+                    <div className="wrapper">
+                    <h1 className="title">TODO - LIST</h1>
+                    <ul className="list-group">
+                        {list}
+                    </ul>
+                    <form className="form-group" onSubmit={this.addItem.bind(this)}>
+                        <input className="form-control" value={this.state.value} onChange={this.handleChange.bind(this)} placeholder="do something"/>
+                        <input className="btn btn-primary" type="submit" value="Add" />
+                    </form>
+                    </div>
+                </div>
+        )
+        }
+
+        }
+
+        ReactDOM.render(
+            <Task/>
+        ,
+        app);
+</script>
+
+</body>
+</html>
