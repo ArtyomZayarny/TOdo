@@ -103,7 +103,7 @@
                         {list}
                     </ul>
                     <form className="form-group" onSubmit={this.addItem.bind(this)}>
-                        <input className="form-control" value={this.state.value} onChange={this.handleChange.bind(this)} placeholder="do something"/>
+                        <input className="form-control" value={this.state.value} onChange={this.handleChange.bind(this)} placeholder="do something" required/>
                         <input className="btn btn-primary" type="submit" value="Add" />
                     </form>
                     </div>
